@@ -1,13 +1,15 @@
 #include <stdio.h>
 
+//身分證驗證 
+
 int main(){
 	char letter;
-	int num[10];
-	int cases,k,n,i,j,ans;
-	scanf ("%d",&cases);
-	for (k = 1;k <= cases;k++){
-		scanf ("%1s%d",&letter,&n);
-		switch (letter){
+	int num[11];
+	int cases,k,n,i,j,z,ans;
+	scanf ("%d%*c",&cases);				//輸入(cases)筆測資 
+	for (k = 1;k <= cases;k++){	
+		scanf ("%c%d%*c",&letter,&n);	//輸入身分證 
+		switch (letter){				//判斷英文字代表多少數字 
 			case 'A': i = 10; break;
 			case 'B': i = 11; break;
 			case 'C': i = 12; break;
@@ -35,22 +37,23 @@ int main(){
 			case 'Y': i = 31; break;
 			case 'Z': i = 33; break;
 		}
-		num[0] = i / 10;
-		num[1] = i % 10;
-		for (j = 10;j >= 2;j--){
+		num[0] = i / 10;				//把英文字的10位數字存到陣列 num[0]的位置 
+		num[1] = i % 10;				//把個位數字存到陣列 num[1]的位置 
+		for (j = 10;j >= 2;j--){		//把數字部分存入陣列 
 			num[j] = n % 10;
 			n /= 10;
 		}
-		ans = num[0] + num[10];
-		for (j = 1;j <= 9;j++){
-			ans += num[j] * (10 - j);
+		ans = num[0] + num[10];			//因為都乘以1所以先相加 
+		for (z = 1;z <= 9;z++){			//照身分證的規則相加 
+			ans += num[z] * (10 - z);
 		}
-		if (ans % 10 == 0) {
-			printf ("real\n");
+		if (ans % 10 == 0) {			//能被10整除的話代表有此身分證 
+			printf ("real");
 		}
-		else {
-			printf ("fake\n");
-		} 
+		else printf ("fake");
+		if (k != cases) printf ("\n");
 	}
 	return 0;
 }
+
+//2018/11/10 finish
