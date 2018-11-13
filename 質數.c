@@ -4,7 +4,7 @@ int main(){
 	int n,k,num,j,i,var;
 	scanf ("%d",&n);
 	for (k = 1;k <= n;k++){
-		scanf ("%d",num);
+		scanf ("%d",&num);
 		if (num == 1){
 			printf ("N");
 		}
@@ -19,6 +19,9 @@ int main(){
 			if (var == 0){
 				printf ("Y");
 			}
+			else printf ("N");
 		}
+		printf ("\n");
 	}
+	return 0;
 }
