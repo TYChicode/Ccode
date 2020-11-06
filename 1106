@@ -1,0 +1,137 @@
+/*
+	請勿修改以下部分
+	Do not edit the following lines.
+	#include <stdio.h>
+	#include "NUC100Series.h"
+	#include "MCU_init.h"
+	#include "GPIO.h"
+	#include "SYS_init.h"
+*/
+#include <stdio.h>
+#include "NUC100Series.h"
+#include "MCU_init.h"
+#include "GPIO.h"
+#include "SYS_init.h"
+#include "Seven_Segment.h"
+#include "Scankey.h"
+
+int main(void)
+{
+/*
+  請勿修改以下部分
+	Do not edit the following lines.
+	SYS_Init();
+	SYS_LockReg();
+	LOCKREG();
+*/	
+  SYS_Init();
+	SYS_LockReg();
+	LOCKREG();
+	
+	OpenKeyPad();
+	OpenSevenSegment();
+	GPIO_SetMode( PC, BIT12, GPIO_PMD_OUTPUT);
+	GPIO_SetMode( PC, BIT13, GPIO_PMD_OUTPUT);
+	GPIO_SetMode( PC, BIT14, GPIO_PMD_OUTPUT);
+	GPIO_SetMode( PC, BIT15, GPIO_PMD_OUTPUT);
+	
+
+		PC12 = 1;
+		PC13 = 1;
+		PC14 = 1;
+		PC15 = 1;
+		
+		uint8_t i;
+		uint8_t nlong;//密碼長度
+		
+		nlong = ScanKey();
+		while(nlong==0){
+			nlong = ScanKey();
+			if (nlong!=0){
+				break;
+			}
+		}
+		CLK_SysTickDelay(100000);
+		switch(nlong){
+			case 0:
+				PC12 = 1;
+				PC13 = 1;
+				PC14 = 1;
+				PC15 = 1;
+				break;
+			case 1:
+				PC12 = 1;
+				PC13 = 1;
+				PC14 = 1;
+				PC15 = 0;
+				break;
+			case 2:
+				PC12 = 1;
+				PC13 = 1;
+				PC14 = 0;
+				PC15 = 1;
+				break;
+			case 3:
+				PC12 = 1;
+				PC13 = 1;
+				PC14 = 0;
+				PC15 = 0;
+				break;
+			case 4:
+				PC12 = 1;
+				PC13 = 0;
+				PC14 = 1;
+				PC15 = 1;
+				break;
+			case 5:
+				PC12 = 1;
+				PC13 = 0;
+				PC14 = 1;
+				PC15 = 0;
+				break;
+			case 6:
+				PC12 = 1;
+				PC13 = 0;
+				PC14 = 0;
+				PC15 = 1;
+				break;
+			case 7:
+				PC12 = 1;
+				PC13 = 0;
+				PC14 = 0;
+				PC15 = 0;
+				break;
+			case 8:
+				PC12 = 0;
+				PC13 = 1;
+				PC14 = 1;
+				PC15 = 1;
+				break;
+			case 9:
+				PC12 = 0;
+				PC13 = 1;
+				PC14 = 1;
+				PC15 = 0;
+				break;
+		}
+		
+		uint8_t n[9];
+	
+		for (i=nlong-1;i>=0;i--){
+			n[i] = ScanKey();
+			while(n[i]==0){
+				n[i] = ScanKey();
+				if (n[i]!=0){
+					break;
+				}
+				else {
+					ShowSevenSegment(0,n[i]);
+				}
+			}
+		}
+		PC12 = 0;
+		PC13 = 0;
+		PC14 = 0;
+		PC15 = 0;
+	
+}
