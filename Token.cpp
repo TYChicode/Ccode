@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <iostream.h>
+#include <iostream>
 
 using namespace std;
 
-//Token Ãş«¬ 
+//Token é¡å‹ 
 enum class TokenType {
-	NUMBER, //¼Æ¦r
-	IDENT, //ÃÑ§O²Å(ÅÜ¼Æ)
-	KEYWORD, //ÃöÁä¦r(EX. int, float)
+	NUMBER, //æ•¸å­— 
+	IDENT, //è­˜åˆ¥ç¬¦(è®Šæ•¸)
+	KEYWORD, // é—œéµå­—(EX. int, float)
 	PLUS, // +
 	MINUS, // -
 	STAR, // *
@@ -17,17 +17,17 @@ enum class TokenType {
 	SLASH, // /
 	LPAREN, // (
 	RPAREN, // )
-	END, //¿é¤Jµ²§ô
-	ERROR, //¿ù»~ 
+	END, // å­—ä¸²çµæŸ 
+	ERROR, // éŒ¯èª¤ 
 };
 
-//Token µ²ºc 
+//Token çµæ§‹ 
 struct Token{
 	TokenType type;
 	string valus;
 };
 
-//µüªk¤ÀªR¾¹
+//è©æ³•åˆ†æå™¨ 
 class Lexer {
 	private:
 		string input;
